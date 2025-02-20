@@ -3,7 +3,7 @@
 Welcome to **MyQuestionsCTF**! Test your skills and challenge yourself with exciting Capture The Flag (CTF) questions. 
 
 
-### You can access the CTF questions here: 🔗 [CTF Questions](https://chaitanyap28.github.io/MyQuestionsCTF/)  
+### 🔗 [CTF Questions](https://chaitanyap28.github.io/MyQuestionsCTF/)  
 
 
 ## ⚠ **Rules & Guidelines:** 

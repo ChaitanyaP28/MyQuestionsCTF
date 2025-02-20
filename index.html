@@ -46,7 +46,7 @@
     <!-- Hint Popup -->
     <div class="hint-popup" id="hintPopup">
         <p id="hintText"></p>
-        <button class="btn btn-secondary" onclick="closeHint()">Close</button>
+        <button class="btn btn-info" onclick="closeHint()">Close</button>
     </div>
 
     <script>
@@ -82,19 +82,19 @@
                 let fileName = question.attachment.split('/').pop();
                 downloadButton = `<a href="${question.attachment}" class="btn btn-success mt-2" download>${fileName}</a>`;
             }
-            document.getElementById("modalTitle").textContent = question.question;
             let hintButtons = "";
             if (question.hints && question.hints.length > 0) {
                 hintButtons = question.hints.map((hint, idx) => 
                     `<button class="btn btn-info mt-2" onclick="showHint('${hint}')">Hint ${idx + 1}</button>`
                 ).join(" ");
             }
+            document.getElementById("modalTitle").textContent = question.question;
             document.getElementById("modalBody").innerHTML = `
                 <p style="white-space: pre-line;">${question.description}</p>
                 ${downloadButton}
+                <div class="mt-2">${hintButtons}</div>
                 <input type="text" class="form-control flag-input mt-2" placeholder="Enter flag">
                 <button class="btn btn-primary mt-2" onclick="checkFlag(this, '${question.answer}', ${card.dataset.index})">Submit</button>
-                ${hintButtons}
                 <p class="result mt-2"></p>
             `;
             new bootstrap.Modal(document.getElementById("questionModal")).show();

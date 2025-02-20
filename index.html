@@ -79,7 +79,8 @@
         function showQuestionModal(question, card) {
             let downloadButton = "";
             if (question.attachment) {
-                downloadButton = `<a href="${question.attachment}" class="btn btn-success mt-2" download>Download Attachment</a>`;
+                let fileName = question.attachment.split('/').pop();
+                downloadButton = `<a href="${question.attachment}" class="btn btn-success mt-2" download>${fileName}</a>`;
             }
             document.getElementById("modalTitle").textContent = question.question;
             let hintButtons = "";
@@ -89,7 +90,7 @@
                 ).join(" ");
             }
             document.getElementById("modalBody").innerHTML = `
-                <p><strong>Description:</strong> ${question.description}</p>
+                <p style="white-space: pre-line;">${question.description}</p>
                 ${downloadButton}
                 <input type="text" class="form-control flag-input mt-2" placeholder="Enter flag">
                 <button class="btn btn-primary mt-2" onclick="checkFlag(this, '${question.answer}', ${card.dataset.index})">Submit</button>
@@ -118,7 +119,7 @@
         }
 
         function showHint(hint) {
-            document.getElementById("hintText").textContent = hint;
+            document.getElementById("hintText").innerHTML = hint;
             document.getElementById("hintPopup").style.display = "block";
         }
 

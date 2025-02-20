@@ -7,7 +7,7 @@ Welcome to **MyQuestionsCTF**! Test your skills and challenge yourself with exci
 
 
 ## ⚠ **Rules & Guidelines:** 
-**To maintain fairness and integrity, please follow these rules:**
+### **To maintain fairness and integrity, please follow these rules:**
 
 ❌ Do **NOT** open any files directly from the repository.  
 ❌ Do **NOT** attempt URL manipulation, website inspection, or any unfair methods.  

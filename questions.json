@@ -1,0 +1,16 @@
+[
+    {
+        "category": "Web",
+        "difficulty": "Easy",
+        "text": "What is the flag format?",
+        "hint": "It starts with CTF{ and ends with }",
+        "answer": "CTF{example_flag}"
+    },
+    {
+        "category": "Crypto",
+        "difficulty": "Medium",
+        "text": "Decrypt this message: U2FsdGVkX1...",
+        "hint": "It’s a common symmetric encryption.",
+        "answer": "CTF{aes_decryption}"
+    }
+]

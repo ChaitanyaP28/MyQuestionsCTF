@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF Challenge</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f8f9fa; }
+        .container { margin-top: 50px; }
+        .challenge-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); text-align: center; cursor: pointer; transition: background-color 0.3s ease; }
+        .challenge-card.correct { background-color: #28a745; color: white; }
+        .challenge-card.incorrect { background-color: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">CTF Challenge</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="challenge-grid d-flex flex-wrap justify-content-center gap-3" id="question-container"></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="questionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loadQuestions() {
+            try {
+                const response = await fetch('questions.json');
+                const questions = await response.json();
+                displayQuestions(questions);
+            } catch (error) {
+                console.error("Error loading questions:", error);
+            }
+        }
+
+        function displayQuestions(questions) {
+            const container = document.getElementById("question-container");
+            container.innerHTML = "";
+            
+            questions.forEach((question, index) => {
+                const card = document.createElement("div");
+                card.className = "challenge-card col-md-3";
+                card.innerHTML = `<h5>${question.category}</h5><p>Difficulty: ${question.difficulty}</p>`;
+                card.dataset.index = index;
+                card.addEventListener("click", function() {
+                    showQuestionModal(question, card);
+                });
+                container.appendChild(card);
+            });
+        }
+
+        function showQuestionModal(question, card) {
+            document.getElementById("modalTitle").textContent = question.category;
+            document.getElementById("modalBody").innerHTML = `
+                <p><strong>Difficulty:</strong> ${question.difficulty}</p>
+                <p>${question.text}</p>
+                <input type="text" class="form-control flag-input" placeholder="Enter flag">
+                <button class="btn btn-primary mt-2" onclick="checkFlag(this, '${question.answer}', ${card.dataset.index})">Submit</button>
+                <p class="result mt-2"></p>
+            `;
+            new bootstrap.Modal(document.getElementById("questionModal")).show();
+        }
+
+        function checkFlag(button, correctAnswer, index) {
+            const input = document.querySelector(".flag-input").value.trim();
+            const result = document.querySelector(".result");
+            const card = document.querySelectorAll(".challenge-card")[index];
+            
+            if (input === correctAnswer) {
+                result.innerHTML = "✅ Correct!";
+                result.style.color = "green";
+                card.classList.add("correct");
+                card.classList.remove("incorrect");
+            } else {
+                result.innerHTML = "❌ Incorrect, try again.";
+                result.style.color = "red";
+                card.classList.add("incorrect");
+                card.classList.remove("correct");
+            }
+        }
+
+        loadQuestions();
+    </script>
+</body>
+</html>

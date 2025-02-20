@@ -1,15 +1,15 @@
 [
     {
-        "question": "What is the flag format?",
-        "description": "Find out the correct flag format used in this CTF event.",
-        "hints": ["It starts with CTF{ and ends with }"],
-        "answer": "CTF{example_flag}"
+        "question": "Welcome",
+        "description": "Find out the correct flag format used in this CTF event. The flag is 'th1s_1s_th3_c0rr3ct_f0rm4t', use CTF{...}",
+        "hints": ["CTF{th1s_1s_th3_c0rr3ct_f0rm4t}"],
+        "answer": "CTF{th1s_1s_th3_c0rr3ct_f0rm4t}"
     },
     {
-        "question": "Decrypt this message",
-        "description": "Decrypt the given ciphertext: U2FsdGVkX1...",
-        "hints": ["Try base64 decoding first", "Then use AES decryption"],
-        "answer": "CTF{aes_decryption}",
-        "attachment": "Attachments/tmp1.txt"
+        "question": "Zip Bomb",
+        "description": "While I was going on a Walk with my dog named Bin on the -e, I stumbled upon a mysterious drive. Inside, I found a file named mysterious_file.png. At first glance, it seems like just another image. But something feels off—could you find what’s hidden within? Success may be just a few steps away, but you’ll need the right tools to uncover what’s hidden within. Success is the key to your final solution.",
+        "hints": ["Read the first line of the description. Read it Carefully.", "The folder name is trying to tell you something, looks like a coded message. Maybe a right key will tell you exactly what it is.","Did u read the hint in the description?"],
+        "answer": "CTF{Z1P_B0MB_1NS1DE_PNG}",
+        "attachment": "Attachments/mysterious_file.png"
     }
 ]

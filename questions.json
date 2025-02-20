@@ -10,6 +10,6 @@
         "description": "Decrypt the given ciphertext: U2FsdGVkX1...",
         "hints": ["Try base64 decoding first", "Then use AES decryption"],
         "answer": "CTF{aes_decryption}",
-        "attachment": "https://github.com/ChaitanyaP28/MyQuestionsCTF/blob/main/README.md"
+        "attachment": "Attachments/tmp1.txt"
     }
 ]

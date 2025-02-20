@@ -6,7 +6,7 @@ Welcome to **MyQuestionsCTF**! Test your skills and challenge yourself with exci
 ### You can access the CTF questions here: 🔗 [CTF Questions](https://chaitanyap28.github.io/MyQuestionsCTF/)  
 
 
-## ⚠ Rules & Guidelines:  
+## ⚠ **Rules & Guidelines:** 
 **To maintain fairness and integrity, please follow these rules:**
 
 ❌ Do **NOT** open any files directly from the repository.  

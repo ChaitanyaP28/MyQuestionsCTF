@@ -1,16 +1,15 @@
 [
     {
-        "category": "Web",
-        "difficulty": "Easy",
-        "text": "What is the flag format?",
-        "hint": "It starts with CTF{ and ends with }",
+        "question": "What is the flag format?",
+        "description": "Find out the correct flag format used in this CTF event.",
+        "hints": ["It starts with CTF{ and ends with }"],
         "answer": "CTF{example_flag}"
     },
     {
-        "category": "Crypto",
-        "difficulty": "Medium",
-        "text": "Decrypt this message: U2FsdGVkX1...",
-        "hint": "It’s a common symmetric encryption.",
-        "answer": "CTF{aes_decryption}"
+        "question": "Decrypt this message",
+        "description": "Decrypt the given ciphertext: U2FsdGVkX1...",
+        "hints": ["Try base64 decoding first", "Then use AES decryption"],
+        "answer": "CTF{aes_decryption}",
+        "attachment": "https://github.com/ChaitanyaP28/MyQuestionsCTF/blob/main/README.md"
     }
 ]

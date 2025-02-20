@@ -9,9 +9,13 @@
     <style>
         body { font-family: Arial, sans-serif; background-color: #f8f9fa; }
         .container { margin-top: 50px; }
-        .challenge-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); text-align: center; cursor: pointer; transition: background-color 0.3s ease; }
+        .challenge-card { background: white; padding: 50px; border-radius: 15px; box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1); text-align: center; cursor: pointer; transition: background-color 0.3s ease; font-size: 1.5rem; width: 300px; height: 180px; display: flex; align-items: center; justify-content: center; }
         .challenge-card.correct { background-color: #28a745; color: white; }
         .challenge-card.incorrect { background-color: #dc3545; color: white; }
+        .hint-popup { display: none; position: fixed; top:50%; left:50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); text-align: center; z-index: 2000; }
+        .hint-popup .close-btn { cursor: pointer; color: red; font-weight: bold; }
+        .challenge-card h5 { font-weight: bold; }
+        .navbar .container { display: flex; justify-content: center; }
     </style>
 </head>
 <body>
@@ -34,8 +38,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalBody"></div>
+                <div class="modal-footer" id="modalFooter"></div>
             </div>
         </div>
+    </div>
+
+    <!-- Hint Popup -->
+    <div class="hint-popup" id="hintPopup">
+        <p id="hintText"></p>
+        <button class="btn btn-secondary" onclick="closeHint()">Close</button>
     </div>
 
     <script>
@@ -56,7 +67,7 @@
             questions.forEach((question, index) => {
                 const card = document.createElement("div");
                 card.className = "challenge-card col-md-3";
-                card.innerHTML = `<h5>${question.category}</h5><p>Difficulty: ${question.difficulty}</p>`;
+                card.innerHTML = `<h5>${question.question}</h5>`;
                 card.dataset.index = index;
                 card.addEventListener("click", function() {
                     showQuestionModal(question, card);
@@ -66,12 +77,23 @@
         }
 
         function showQuestionModal(question, card) {
-            document.getElementById("modalTitle").textContent = question.category;
+            let downloadButton = "";
+            if (question.attachment) {
+                downloadButton = `<a href="${question.attachment}" class="btn btn-success mt-2" download>Download Attachment</a>`;
+            }
+            document.getElementById("modalTitle").textContent = question.question;
+            let hintButtons = "";
+            if (question.hints && question.hints.length > 0) {
+                hintButtons = question.hints.map((hint, idx) => 
+                    `<button class="btn btn-info mt-2" onclick="showHint('${hint}')">Hint ${idx + 1}</button>`
+                ).join(" ");
+            }
             document.getElementById("modalBody").innerHTML = `
-                <p><strong>Difficulty:</strong> ${question.difficulty}</p>
-                <p>${question.text}</p>
-                <input type="text" class="form-control flag-input" placeholder="Enter flag">
+                <p><strong>Description:</strong> ${question.description}</p>
+                ${downloadButton}
+                <input type="text" class="form-control flag-input mt-2" placeholder="Enter flag">
                 <button class="btn btn-primary mt-2" onclick="checkFlag(this, '${question.answer}', ${card.dataset.index})">Submit</button>
+                ${hintButtons}
                 <p class="result mt-2"></p>
             `;
             new bootstrap.Modal(document.getElementById("questionModal")).show();
@@ -93,6 +115,15 @@
                 card.classList.add("incorrect");
                 card.classList.remove("correct");
             }
+        }
+
+        function showHint(hint) {
+            document.getElementById("hintText").textContent = hint;
+            document.getElementById("hintPopup").style.display = "block";
+        }
+
+        function closeHint() {
+            document.getElementById("hintPopup").style.display = "none";
         }
 
         loadQuestions();

@@ -11,5 +11,12 @@
         "hints": ["Read the first line of the description. Read it Carefully.", "The folder name is trying to tell you something, looks like a coded message. Maybe a right key will tell you exactly what it is.","Did you read the hint in the description?", "Read the Description Properly for Cracking the passowrd of the zip"],
         "answer": "CTF{Z1P_B0MB_1NS1DE_PNG}",
         "attachment": "Attachments/mysterious_file.png"
+    },
+    {
+        "question": "Zip Bomb",
+        "description": "A secret message is hidden in this huge binary string. Can you decode it?",
+        "hints": [],
+        "answer": "CTF{Qr_C0d3}",
+        "attachment": "Attachments/Binary.txt"
     }
 ]

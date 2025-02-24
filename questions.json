@@ -14,7 +14,7 @@
     },
     {
         "question": "Binary",
-        "description": "A secret message is hidden in this huge binary string. Can you decode it?",
+        "description": "Huge binary string.",
         "hints": [],
         "answer": "CTF{Qr_C0d3}",
         "attachment": "Attachments/Binary.txt"

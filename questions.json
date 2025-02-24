@@ -13,7 +13,7 @@
         "attachment": "Attachments/mysterious_file.png"
     },
     {
-        "question": "Zip Bomb",
+        "question": "Binary",
         "description": "A secret message is hidden in this huge binary string. Can you decode it?",
         "hints": [],
         "answer": "CTF{Qr_C0d3}",

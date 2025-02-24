@@ -20,7 +20,7 @@
         "question": "Binary",
         "category": "Forensics",
         "author":"",
-        "description": "A Huge binary string.",
+        "description": "A Huge Binary String.",
         "hints": [],
         "answer": "CTF{Qr_C0d3}",
         "attachment": "Attachments/Binary.txt"

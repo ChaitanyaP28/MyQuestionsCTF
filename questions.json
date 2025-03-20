@@ -24,5 +24,14 @@
         "hints": [],
         "answer": "CTF{Qr_C0d3}",
         "attachment": "Attachments/Binary.txt"
+    },
+    {
+        "question": "Broken Heart",
+        "category": "Forensics",
+        "author":"",
+        "description": "His Sweet RED Heart has been Br0ken, Can you fix his Sweet Red Heart? Foremost you have to look deep inside his heart to uncover the truth.",
+        "hints": [],
+        "answer": "CTF{R3d_H34rt}",
+        "attachment": "Attachments/Broken_Heart.png"
     }
 ]

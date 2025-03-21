@@ -33,5 +33,14 @@
         "hints": [],
         "answer": "CTF{R3d_H34rt}",
         "attachment": "Attachments/Broken_Heart.png"
+    },
+    {
+        "question": "Alex Goes Missing",
+        "category": "Misc",
+        "author":"",
+        "description": "Steve and Alex were deep underground, mining for diamonds in a vast, dark cave. Two white eyes watched them silently. Then, Alex vanished. No sound, no warning—just gone.\n\nMeanwhile, back at the server console, the admin watched in silence. Something wasn’t right. The shadows seemed darker than usual. Was it just a glitch? Or… was someone else down there?\n\nThe admin needed to ask Steve about it but without alerting the other players. So the admin executed a series of commands.\n\nCan you help Steve decode the admin’s secret message?\n\n<strong>SERVER LOG:</strong>\n<span style='color: #C71585;'><strong>/summon Creeper  \n/give @a Torch  \n/summon Frog  \n/give {Minecraft:Air}  \n/summon Silverfish  \n/teleport @a ~ ~1 ~    \n/summon Enderman  \n/give @a Vex_Spawn_Egg  \n/summon Elder_Guardian  \n/fill ~ ~ ~ ~100 ~ ~100 Water  \n/summon Her0Brine  \n/enchant @a Efficiency 255  \n/weather Rain  \n/summon Ender_Dragon \n/execute as @p run give @p minecraft:iron_block 4 run give @p minecraft:carved_pumpkin 1 ????_?????\n64 Items is called ?????\n/summon Axolotl  \nPlayer tried to swim in Lava\n/summon Endermite  \n/xp add @a 10 levels  \n/say \"End Of Code\"</span></strong>",
+        "hints": [],
+        "answer": "CTF{S1EVEWHEREISALEX}",
+        "attachment": ""
     }
 ]

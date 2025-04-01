@@ -30,7 +30,7 @@
         "category": "Forensics",
         "author":"",
         "description": "His Sweet RED Heart has been Br0ken, Can you fix his Sweet Red Heart? Foremost you have to look deep inside his heart to uncover the truth.",
-        "hints": ["Look Deep into the cracks of the Broken Heart to find whats within","You need a little bit of Zig-Saw Puzzle skill and some Glue to fix it","His heart has Many Layers, Maybe one of them is the key"],
+        "hints": ["Look Deep into the cracks of the Broken Heart to find whats within","You need a little bit of Zig-Saw Puzzle skill and some Glue to fix it","His heart has Many Layers, Maybe one of them has the key"],
         "answer": "CTF{R3d_H34rt}",
         "attachment": "Attachments/Broken_Heart.png"
     },

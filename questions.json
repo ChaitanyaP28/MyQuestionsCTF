@@ -21,7 +21,7 @@
         "category": "Forensics",
         "author":"",
         "description": "A Huge Binary String.",
-        "hints": [],
+        "hints": ["Maybe you should look from an Different Angle", "You need to Enhance the Output before Reading It. Probably a Python code will do it"],
         "answer": "CTF{Qr_C0d3}",
         "attachment": "Attachments/Binary.txt"
     },
@@ -30,7 +30,7 @@
         "category": "Forensics",
         "author":"",
         "description": "His Sweet RED Heart has been Br0ken, Can you fix his Sweet Red Heart? Foremost you have to look deep inside his heart to uncover the truth.",
-        "hints": [],
+        "hints": ["Look Deep into the cracks of the Broken Heart to find whats within","You need a little bit of Zig-Saw Puzzle skill and some Glue to fix it","His heart has Many Layers, Maybe one of them is the key"],
         "answer": "CTF{R3d_H34rt}",
         "attachment": "Attachments/Broken_Heart.png"
     },

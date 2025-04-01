@@ -1,368 +1,430 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CTF Challenge</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CTF Challenge</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script> <!-- Markdown Parser -->
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f8f9fa;
+            }
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-        }
+            .container {
+                margin-top: 50px;
+            }
 
-        .container {
-            margin-top: 50px;
-        }
+            .challenge-card {
+                background: white;
+                padding: 50px;
+                border-radius: 15px;
+                box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                font-size: 1.5rem;
+                width: 300px;
+                height: 150px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-        .challenge-card {
-            background: white;
-            padding: 50px;
-            border-radius: 15px;
-            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 1.5rem;
-            width: 300px;
-            height: 150px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+            .challenge-card.correct {
+                background-color: #28a745;
+                color: white;
+            }
 
-        .challenge-card.correct {
-            background-color: #28a745;
-            color: white;
-        }
+            .challenge-card.incorrect {
+                background-color: #dc3545;
+                color: white;
+            }
 
-        .challenge-card.incorrect {
-            background-color: #dc3545;
-            color: white;
-        }
+            .challenge-card h5 {
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
 
-        .challenge-card h5 {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+            /* Overlay to dim the background */
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: none;
+                z-index: 1500;
+            }
 
-        /* Overlay to dim the background */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            z-index: 1500;
-        }
+            /* Hint Popup */
+            .hint-popup {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                z-index: 2000;
+                max-width: 600px;
+            }
 
-        /* Hint Popup */
-        .hint-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            z-index: 2000;
-            max-width: 600px;
-        }
+            .btn-close {
+                filter: none;
+            }
 
-        .btn-close {
-            filter: none;
-        }
+            .navbar .navbar-brand {
+                font-size: 2rem;
+                font-weight: bold;
+            }
 
-        .navbar .navbar-brand {
-            font-size: 2rem;
-            font-weight: bold;
-        }
+            .navbar .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
 
-        .navbar .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
+            .navbar-brand {
+                margin: 0 auto;
+                font-size: 2rem;
+                font-weight: bold;
+            }
 
-        .navbar-brand {
-            margin: 0 auto;
-            font-size: 2rem;
-            font-weight: bold;
-        }
+            .rules-popup,
+            .writeups-popup {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                z-index: 2000;
+                max-width: 600px;
+                width: 90%;
+            }
 
-        .rules-popup,
-        .writeups-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 2000;
-            max-width: 600px;
-            width: 90%;
-        }
+            .rules-popup h2,
+            .writeups-popup h2 {
+                text-align: center;
+            }
 
-        .rules-popup h2,
-        .writeups-popup h2 {
-            text-align: center;
-        }
+            #readmeContent,
+            #writeUpsContent {
+                text-align: left;
+            }
 
-        #readmeContent,
-        #writeUpsContent {
-            text-align: left;
-        }
+            .rules-popup .btn,
+            .writeups-popup .btn {
+                display: block;
+                margin: 15px auto 0;
+            }
 
-        .rules-popup .btn,
-        .writeups-popup .btn {
-            display: block;
-            margin: 15px auto 0;
-        }
+            .category-title {
+                font-size: 1.8rem;
+                font-weight: bold;
+                margin-top: 30px;
+                text-align: left;
+                width: 100%;
+                margin-left: 10px;
+                margin-bottom: 10px;
+            }
 
-        .category-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-top: 30px;
-            text-align: left;
-            width: 100%;
-            margin-left: 10px;
-            margin-bottom: 10px;
-        }
+            .category-section {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                margin-bottom: 30px;
+            }
 
-        .category-section {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: 100%;
-            margin-bottom: 30px;
-        }
+            .challenge-card {
+                max-width: 400px;
+                text-align: left;
+                margin-left: 10px;
+                margin-bottom: 15px;
+                width: 300px;
+                text-align: center;
+                padding: 20px;
+                margin: 0;
+            }
 
-        .challenge-card {
-            max-width: 400px;
-            text-align: left;
-            margin-left: 10px;
-            margin-bottom: 15px;
-            width: 300px;
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-        }
+            .challenge-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                margin-left: 10px;
+            }
 
-        .challenge-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-left: 10px;
-        }
+            #navbar-brand {
+                padding-left: 100px;
+            }
 
-        #navbar-brand {
-            padding-left: 100px;
-        }
-    </style>
-    <link rel="icon" href="favicon.png" type="image/png">
-</head>
+            .writeups-confirm-popup {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                z-index: 2100;
+                max-width: 400px;
+            }
 
-<body>
-    <nav class="navbar navbar-dark bg-dark">
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 2000;
+            }
+        </style>
+
+        <link rel="icon" href="favicon.png" type="image/png">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#" style="padding-left: 100px;" id="navbar-brand">CTF Challenge</a>
+                <button class="btn btn-warning ms-2 text-white" onclick="showWriteUps()">WriteUps</button>
+                <button class="btn btn-danger ms-2" onclick="showRules()">Rules</button>
+            </div>
+        </nav>
+        
+
         <div class="container">
-            <a class="navbar-brand" href="#" style="padding-left: 100px;" id="navbar-brand">CTF Challenge</a>
-            <button class="btn btn-warning ms-2 text-white" onclick="showWriteUps()">WriteUps</button>
-            <button class="btn btn-danger ms-2" onclick="showRules()">Rules</button>
+            <div class="challenge-grid d-flex flex-wrap justify-content-center gap-3" id="question-container"></div>
         </div>
-    </nav>
-    
 
-    <div class="container">
-        <div class="challenge-grid d-flex flex-wrap justify-content-center gap-3" id="question-container"></div>
-    </div>
-
-    <!-- Overlay -->
-    <div class="overlay" id="overlay"></div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="questionModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Overlay -->
+        <div class="overlay" id="overlay"></div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="questionModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modalBody"></div>
+                    <div class="modal-footer" id="modalFooter"></div>
                 </div>
-                <div class="modal-body" id="modalBody"></div>
-                <div class="modal-footer" id="modalFooter"></div>
             </div>
         </div>
-    </div>
 
-    <!-- Hint Popup -->
-    <div class="hint-popup" id="hintPopup">
-        <p id="hintText"></p>
-        <button class="btn btn-info" onclick="closeHint()">Close</button>
-    </div>
+        <!-- Hint Popup -->
+        <div class="hint-popup" id="hintPopup">
+            <p id="hintText"></p>
+            <button class="btn btn-info" onclick="closeHint()">Close</button>
+        </div>
 
-    <!-- Rules Popup -->
-    <div class="rules-popup" id="rulesPopup">
-        <h2>RULES</h2>
-        <div id="readmeContent">Loading...</div>
-        <button class="btn btn-info" onclick="closeRules()">Close</button>
-    </div>
+        <!-- Rules Popup -->
+        <div class="rules-popup" id="rulesPopup">
+            <h2>RULES</h2>
+            <div id="readmeContent">Loading...</div>
+            <button class="btn btn-info" onclick="closeRules()">Close</button>
+        </div>
 
-    <!-- WriteUps Popup -->
-    <div class="writeups-popup" id="writeUpsPopup">
-        <h2>Write Ups</h2>
-        <div id="writeUpsContent">Loading...</div>
-        <button class="btn btn-info" onclick="closeWriteUps()">Close</button>
-    </div>
+        <!-- WriteUps Popup -->
+        <div class="writeups-popup" id="writeUpsPopup">
+            <h2>Write Ups</h2>
+            <div id="writeUpsContent">Loading...</div>
+            <button class="btn btn-info" onclick="closeWriteUps()">Close</button>
+        </div>
+        <!-- First Confirmation Popup -->
+        <div class="overlay" id="writeUpsConfirmOverlay"></div>
+        <div class="writeups-confirm-popup" id="writeUpsConfirmPopup">
+            <h3>Do you want to open Writeups?</h3>
+            <button class="btn btn-success" onclick="confirmWriteUps(true)">Yes</button>
+            <button class="btn btn-danger" onclick="confirmWriteUps(false)">No</button>
+        </div>
 
-    <script>
-        async function loadQuestions() {
-            try {
-                const response = await fetch('questions.json');
-                const questions = await response.json();
-                displayQuestions(questions);
-            } catch (error) {
-                console.error("Error loading questions:", error);
+        <!-- Second Confirmation Popup -->
+        <div class="overlay" id="writeUpsSureOverlay"></div>
+        <div class="writeups-confirm-popup" id="writeUpsSurePopup">
+            <h3>Are you sure? You want To Open WriteUps</h3>
+            <button class="btn btn-danger" onclick="openWriteUps(false)">No</button>
+            <button class="btn btn-success" onclick="openWriteUps(true)">Yes</button>
+        </div>
+
+        <script>
+            async function loadQuestions() {
+                try {
+                    const response = await fetch('questions.json');
+                    const questions = await response.json();
+                    displayQuestions(questions);
+                } catch (error) {
+                    console.error("Error loading questions:", error);
+                }
             }
-        }
 
-        function displayQuestions(questions) {
-            const container = document.getElementById("question-container");
-            container.innerHTML = "";
+            function displayQuestions(questions) {
+                const container = document.getElementById("question-container");
+                container.innerHTML = "";
 
-            let categories = {};
+                let categories = {};
 
-            questions.forEach((question, index) => {
-                if (!categories[question.category]) {
-                    categories[question.category] = document.createElement("div");
-                    categories[question.category].className = "category-section";
-                    categories[question.category].innerHTML = `<h4 class="category-title">${question.category || "Unknown"}</h4>`;
+                questions.forEach((question, index) => {
+                    if (!categories[question.category]) {
+                        categories[question.category] = document.createElement("div");
+                        categories[question.category].className = "category-section";
+                        categories[question.category].innerHTML = `<h4 class="category-title">${question.category || "Unknown"}</h4>`;
 
-                    let challengeContainer = document.createElement("div");
-                    challengeContainer.className = "challenge-container";
-                    categories[question.category].appendChild(challengeContainer);
+                        let challengeContainer = document.createElement("div");
+                        challengeContainer.className = "challenge-container";
+                        categories[question.category].appendChild(challengeContainer);
 
-                    container.appendChild(categories[question.category]);
+                        container.appendChild(categories[question.category]);
+                    }
+
+                    const card = document.createElement("div");
+                    card.className = "challenge-card";
+                    card.innerHTML = `<h5>${question.question}</h5>`;
+                    card.dataset.index = index;
+                    card.addEventListener("click", function () {
+                        showQuestionModal(question, card);
+                    });
+
+                    categories[question.category].querySelector(".challenge-container").appendChild(card);
+                });
+            }
+
+            function showQuestionModal(question, card) {
+                let downloadButton = "";
+                if (question.attachment) {
+                    let fileName = question.attachment.split('/').pop();
+                    downloadButton = `<a href="${question.attachment}" class="btn btn-success mt-2" download>${fileName}</a>`;
+                }
+                let hintButtons = "";
+                if (question.hints && question.hints.length > 0) {
+                    hintButtons = question.hints.map((hint, idx) =>
+                        `<button class="btn btn-info mt-2" onclick="showHint('${hint}')">Hint ${idx + 1}</button>`
+                    ).join(" ");
                 }
 
-                const card = document.createElement("div");
-                card.className = "challenge-card";
-                card.innerHTML = `<h5>${question.question}</h5>`;
-                card.dataset.index = index;
-                card.addEventListener("click", function () {
-                    showQuestionModal(question, card);
-                });
+                document.getElementById("modalTitle").innerHTML = `<strong>${question.question}</strong>`;
+                document.getElementById("modalBody").innerHTML = `
+                    <p><strong>Category:</strong> ${question.category || "Unknown"}</p>
+                    <p><strong>Author:</strong> ${question.author || "Unknown"}</p>
+                    <p style="white-space: pre-line;"><strong>Description:\n</strong>${question.description}</p>
+                    ${downloadButton}
+                    <div class="mt-2">${hintButtons}</div>
+                    <input type="text" class="form-control flag-input mt-2" placeholder="Enter flag">
+                    <button class="btn btn-primary mt-2" onclick="checkFlag(this, '${question.answer}', ${card.dataset.index})">Submit</button>
+                    <p class="result mt-2"></p>
+                `;
 
-                categories[question.category].querySelector(".challenge-container").appendChild(card);
-            });
-        }
-
-        function showQuestionModal(question, card) {
-            let downloadButton = "";
-            if (question.attachment) {
-                let fileName = question.attachment.split('/').pop();
-                downloadButton = `<a href="${question.attachment}" class="btn btn-success mt-2" download>${fileName}</a>`;
-            }
-            let hintButtons = "";
-            if (question.hints && question.hints.length > 0) {
-                hintButtons = question.hints.map((hint, idx) =>
-                    `<button class="btn btn-info mt-2" onclick="showHint('${hint}')">Hint ${idx + 1}</button>`
-                ).join(" ");
+                new bootstrap.Modal(document.getElementById("questionModal")).show();
             }
 
-            document.getElementById("modalTitle").innerHTML = `<strong>${question.question}</strong>`;
-            document.getElementById("modalBody").innerHTML = `
-                <p><strong>Category:</strong> ${question.category || "Unknown"}</p>
-                <p><strong>Author:</strong> ${question.author || "Unknown"}</p>
-                <p style="white-space: pre-line;"><strong>Description:\n</strong>${question.description}</p>
-                ${downloadButton}
-                <div class="mt-2">${hintButtons}</div>
-                <input type="text" class="form-control flag-input mt-2" placeholder="Enter flag">
-                <button class="btn btn-primary mt-2" onclick="checkFlag(this, '${question.answer}', ${card.dataset.index})">Submit</button>
-                <p class="result mt-2"></p>
-            `;
+            function checkFlag(button, correctAnswer, index) {
+                const input = document.querySelector(".flag-input").value.trim();
+                const result = document.querySelector(".result");
+                const card = document.querySelectorAll(".challenge-card")[index];
 
-            new bootstrap.Modal(document.getElementById("questionModal")).show();
-        }
-
-        function checkFlag(button, correctAnswer, index) {
-            const input = document.querySelector(".flag-input").value.trim();
-            const result = document.querySelector(".result");
-            const card = document.querySelectorAll(".challenge-card")[index];
-
-            if (input === correctAnswer) {
-                result.innerHTML = "✅ Correct!";
-                result.style.color = "green";
-                card.classList.add("correct");
-                card.classList.remove("incorrect");
-            } else {
-                result.innerHTML = "❌ Incorrect, try again.";
-                result.style.color = "red";
-                card.classList.add("incorrect");
-                card.classList.remove("correct");
+                if (input === correctAnswer) {
+                    result.innerHTML = "✅ Correct!";
+                    result.style.color = "green";
+                    card.classList.add("correct");
+                    card.classList.remove("incorrect");
+                } else {
+                    result.innerHTML = "❌ Incorrect, try again.";
+                    result.style.color = "red";
+                    card.classList.add("incorrect");
+                    card.classList.remove("correct");
+                }
             }
-        }
 
-        function showHint(hint) {
-            document.getElementById("hintText").innerHTML = hint;
-            document.getElementById("hintPopup").style.display = "block";
-            document.getElementById("overlay").style.display = "block";
-        }
-
-        function closeHint() {
-            document.getElementById("hintPopup").style.display = "none";
-            document.getElementById("overlay").style.display = "none";
-        }
-
-        async function showRules() {
-            document.getElementById("rulesPopup").style.display = "block";
-            document.getElementById("overlay").style.display = "block";
-
-            try {
-                const response = await fetch('README.md');
-                const text = await response.text();
-                document.getElementById('readmeContent').innerHTML = marked.parse(text);
-            } catch (error) {
-                document.getElementById('readmeContent').innerHTML = "<p>Failed to load README.md.</p>";
+            function showHint(hint) {
+                document.getElementById("hintText").innerHTML = hint;
+                document.getElementById("hintPopup").style.display = "block";
+                document.getElementById("overlay").style.display = "block";
             }
-        }
 
-        async function showWriteUps() {
-            document.getElementById("writeUpsPopup").style.display = "block";
-            document.getElementById("overlay").style.display = "block";
-
-            try {
-                const response = await fetch('WriteUp.md');
-                const text = await response.text();
-                document.getElementById('writeUpsContent').innerHTML = marked.parse(text);
-            } catch (error) {
-                document.getElementById('writeUpsContent').innerHTML = "<p>Failed to load WriteUp.md.</p>";
+            function closeHint() {
+                document.getElementById("hintPopup").style.display = "none";
+                document.getElementById("overlay").style.display = "none";
             }
-        }
 
-        function closeRules() {
-            document.getElementById("rulesPopup").style.display = "none";
-            document.getElementById("overlay").style.display = "none";
-        }
+            async function showRules() {
+                document.getElementById("rulesPopup").style.display = "block";
+                document.getElementById("overlay").style.display = "block";
 
-        function closeWriteUps() {
-            document.getElementById("writeUpsPopup").style.display = "none";
-            document.getElementById("overlay").style.display = "none";
-        }
+                try {
+                    const response = await fetch('README.md');
+                    const text = await response.text();
+                    document.getElementById('readmeContent').innerHTML = marked.parse(text);
+                } catch (error) {
+                    document.getElementById('readmeContent').innerHTML = "<p>Failed to load README.md.</p>";
+                }
+            }
 
-        loadQuestions();
-    </script>
-</body>
+            function showWriteUps() {
+                document.getElementById("writeUpsConfirmOverlay").style.display = "block";
+                document.getElementById("writeUpsConfirmPopup").style.display = "block";
+            }
 
+            function confirmWriteUps(confirmed) {
+                document.getElementById("writeUpsConfirmOverlay").style.display = "none";
+                document.getElementById("writeUpsConfirmPopup").style.display = "none";
+
+                if (!confirmed) return;
+
+                // Show second confirmation
+                document.getElementById("writeUpsSureOverlay").style.display = "block";
+                document.getElementById("writeUpsSurePopup").style.display = "block";
+            }
+
+            async function openWriteUps(confirmed) {
+                document.getElementById("writeUpsSureOverlay").style.display = "none";
+                document.getElementById("writeUpsSurePopup").style.display = "none";
+
+                if (!confirmed) return;
+
+                // Finally open WriteUps
+                document.getElementById("writeUpsPopup").style.display = "block";
+                document.getElementById("overlay").style.display = "block";
+
+                try {
+                    const response = await fetch('WriteUp.md');
+                    const text = await response.text();
+                    document.getElementById('writeUpsContent').innerHTML = marked.parse(text);
+                } catch (error) {
+                    document.getElementById('writeUpsContent').innerHTML = "<p>Failed to load WriteUp.md.</p>";
+                }
+            }
+
+            function closeRules() {
+                document.getElementById("rulesPopup").style.display = "none";
+                document.getElementById("overlay").style.display = "none";
+            }
+
+            function closeWriteUps() {
+                document.getElementById("writeUpsPopup").style.display = "none";
+                document.getElementById("overlay").style.display = "none";
+            }
+
+            loadQuestions();
+        </script>
+    </body>
 </html>

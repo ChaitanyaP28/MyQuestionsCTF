@@ -330,17 +330,21 @@
                     ${downloadButton}
                     <div class="mt-2">${hintButtons}</div>
                     <input type="text" class="form-control flag-input mt-2" placeholder="Enter flag">
-                    <button class="btn btn-primary mt-2" onclick="checkFlag(this, '${question.answer}', ${card.dataset.index})">Submit</button>
+                    <button class="btn btn-primary mt-2" onclick="checkFlag(this, '${question.answer}', '${question.question}')">Submit</button>
                     <p class="result mt-2"></p>
                 `;
+
+                document.getElementById("questionModal").dataset.currentCard = card.dataset.index;  // Store the correct card index
 
                 new bootstrap.Modal(document.getElementById("questionModal")).show();
             }
 
-            function checkFlag(button, correctAnswer, index) {
+            function checkFlag(button, correctAnswer) {
                 const input = document.querySelector(".flag-input").value.trim();
                 const result = document.querySelector(".result");
-                const card = document.querySelectorAll(".challenge-card")[index];
+                const modal = document.getElementById("questionModal");
+                const cardIndex = modal.dataset.currentCard;
+                const card = document.querySelector(`.challenge-card[data-index='${cardIndex}']`);
 
                 if (input === correctAnswer) {
                     result.innerHTML = "✅ Correct!";

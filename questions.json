@@ -42,5 +42,14 @@
         "hints": [],
         "answer": "CTF{S1EVEWHEREISALEX}",
         "attachment": ""
+    },
+    {
+        "question": "Not Reversing 5000",
+        "category": "Reversing",
+        "author":"",
+        "description": "I found a mysterious file on the server, which asked a answer. I didn't know the answer so I tried to Disassemble it. It didn't help me. I also tried Strings with Grep. I was shocked what it showed me!!",
+        "hints": ["strings words.exe | grep 'CTF'","See the Second Line after running Hint1"],
+        "answer": "CTF{R3v3r51ng_1s_h4rd}",
+        "attachment": "Attachments/words.exe"
     }
 ]

@@ -56,7 +56,7 @@
         "question": "Chess - A Game of Intelligence",
         "category": "Forensics",
         "author":"",
-        "description": "Just a Normal Chess Game...",
+        "description": "Just a Normal Chess Game...\n\n\n\n\n\nHint: They may be multiple ways, But only one is the right one. Make sure you try all the Possibilities of Checkmate.",
         "hints": ["Meta is the key to get the Data.", "Try hiding tools to extract hidden secrets.", "It's not random, it's a position. Feed it to a chess board and see what shows up."],
         "answer": "CTF{ChESS_1}",
         "attachment": "Attachments/Chess.jpg"

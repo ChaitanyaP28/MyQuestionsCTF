@@ -57,7 +57,7 @@
         "category": "Forensics",
         "author":"",
         "description": "Just a Normal Chess Game...",
-        "hints": ["Meta is the key to get the Data.", "Try hiding tools to extract hidden secrets.", "It's not random—it's a position. Feed it to a chess board and see what shows up."],
+        "hints": ["Meta is the key to get the Data.", "Try hiding tools to extract hidden secrets.", "It's not random, it's a position. Feed it to a chess board and see what shows up."],
         "answer": "CTF{ChESS_1}",
         "attachment": "Attachments/Chess.jpg"
     }
